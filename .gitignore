@@ -1,0 +1,22 @@
+# IDE
+.idea/
+.vscode/
+
+# BUILD
+build/
+*.exe
+*.so
+*.dll
+*.exec
+
+# DOCS & CONFIG
+config.yaml
+
+# SECRET
+*.pem
+
+# LOGS
+*.log
+
+# OS CACHE
+.DS_STORE
