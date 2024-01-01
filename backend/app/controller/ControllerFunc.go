@@ -138,3 +138,59 @@ func UserInfoHandler(c *gin.Context) {
 	}
 	response.MyResponse(c, http.StatusOK, "Your info: ", ret)
 }
+
+func GetAllDeviceHandler(c *gin.Context) {
+	var query []model.Device
+	var ret []response.Device
+	model.DB.Table("device").Find(&query)
+	for i := 0; i < len(query); i++ {
+		tmp := response.Device{
+			Name:      query[i].Name,
+			Type:      query[i].Type,
+			Alert:     query[i].Alert,
+			ClientID:  query[i].ClientID,
+			Info:      query[i].Info,
+			Lat:       query[i].Lat,
+			Lng:       query[i].Lng,
+			Timestamp: query[i].Timestamp,
+			Value:     query[i].Value,
+		}
+		ret = append(ret, tmp)
+	}
+	name, _ := c.Get("username")
+	rec := model.Record{
+		UserName: name.(string),
+		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Action:   "get all device",
+	}
+	model.DB.Table("record").Create(&rec)
+	response.MyResponse(c, http.StatusOK, "Devices are: ", ret)
+}
+
+func AddDeviceHandler(c *gin.Context) {
+	device := model.Device{}
+	err := c.BindJSON(&device)
+	if err != nil {
+		response.MyResponse(c, http.StatusInternalServerError, "Bind input fail, "+err.Error(), nil)
+		logrus.Info("Bind input fail, " + err.Error())
+		return
+	}
+	tmp := model.Device{}
+	model.DB.Table("device").Where("client_id = ?", device.ClientID).Find(&tmp)
+	if tmp.ClientID != "" {
+		response.MyResponse(c, http.StatusPreconditionFailed, "Device already exists.", nil)
+		return
+	}
+	device.Info = "init"
+	device.Alert = 0
+	device.Timestamp = time.Now().UnixMilli()
+	model.DB.Table("device").Create(&device)
+	name, _ := c.Get("username")
+	rec := model.Record{
+		UserName: name.(string),
+		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Action:   "add device",
+	}
+	model.DB.Table("record").Create(&rec)
+	response.MyResponse(c, http.StatusOK, "Add device success.", nil)
+}

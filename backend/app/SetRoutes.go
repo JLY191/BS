@@ -14,5 +14,7 @@ func addRoutes() {
 	userGroup.GET("/logout", controller.LogoutHandler)
 	userGroup.GET("/info", middleware.Auth(), controller.UserInfoHandler)
 
-	// deviceGroup := G.Group("/device", middleware.Cors(), middleware.Auth())
+	deviceGroup := G.Group("/device", middleware.Cors(), middleware.Auth())
+	deviceGroup.GET("/all", controller.GetAllDeviceHandler)
+	deviceGroup.POST("/add", controller.AddDeviceHandler)
 }

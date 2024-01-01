@@ -7,6 +7,8 @@ type User struct {
 }
 
 type Device struct {
+	Name      string  `json:"name"       form:"name"   query:"name"  gorm:"not null"`
+	Type      int     `json:"type"       form:"type"   query:"type"  gorm:"not null;default:0"`
 	Alert     int     `json:"alert"      form:"alert"   query:"alert"  gorm:"not null;default:0"`
 	ClientID  string  `json:"clientId"   form:"clientId" query:"clientId" gorm:"not null;unique"`
 	Info      string  `json:"info"       form:"info" query:"info" gorm:"not null;"`
