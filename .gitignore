@@ -19,4 +19,4 @@ config.yaml
 *.log
 
 # OS CACHE
-.DS_STORE
+.DS_Store
