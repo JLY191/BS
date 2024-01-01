@@ -12,14 +12,7 @@ func addRoutes() {
 	userGroup.POST("/register", controller.RegisterHandler)
 	userGroup.POST("/login", controller.LoginHandler)
 	userGroup.GET("/logout", controller.LogoutHandler)
+	userGroup.GET("/info", middleware.Auth(), controller.UserInfoHandler)
 
-	siteGroup := G.Group("/site", middleware.Cors())
-	siteGroup.POST("/search", controller.SearchSiteHandler)
-	siteGroup.POST("/get_remark", controller.GetSiteRemarkHandler)
-
-	remarkGroup := G.Group("/remark", middleware.Cors(), middleware.Auth())
-	remarkGroup.POST("/add", controller.AddRemarkHandler)
-	remarkGroup.POST("/delete", controller.DeleteRemarkHandler)
-	remarkGroup.POST("/modify", controller.ModifyRemarkHandler)
-	remarkGroup.GET("/user", controller.GetUserHistoryRemark)
+	// deviceGroup := G.Group("/device", middleware.Cors(), middleware.Auth())
 }

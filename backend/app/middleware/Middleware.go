@@ -9,9 +9,9 @@ import (
 
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie("PM_backend")
+		cookie, err := c.Cookie("bs_jly")
 		if err != nil {
-			logrus.Info("No token")
+			logrus.Info("No cookie")
 			c.Abort()
 		}
 		name := utils.ParseToken(cookie)
