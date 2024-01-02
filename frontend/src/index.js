@@ -4,11 +4,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import './index.css';
 import App from './App';
-import Book from './pages/module3/Book';
+import Device from './pages/Device';
 import Admin from './pages/module3/Admin';
 import Login from './components/Login';
 import EmailLogin from "./components/EmailLogin";
 import Register from './components/Register';
+import Index from "./components/Index";
 import Audit from './pages/Audit';
 import Auditsettings from './components/Auditsettings.jsx';
 import Auditmanage from './components/Auditmanage.jsx';
@@ -32,24 +33,25 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/email_login" element={<EmailLogin />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/module3/page404" element={<Page404 />} />
-          <Route path="/module3" element={<App />}>
-            <Route index element={<Book />} />
-            <Route path="/module3/book" element={<Book />} />
-            <Route path="/module3/admin" element={<Admin />} />
-              <Route path="/module3/audit" element={<Audit />} />
-              <Route path="/module3/audit/settings" element={<Auditsettings />}/>
-              <Route path="/module3/audit/manage" element={<Auditmanage />}/>
-              <Route path="/module3/orderlist" element={<OrderList />} />
-              <Route path="/module3/refund/:orderId" element={<Refund />} />
-              <Route path="/module3/payment/:orderId" element={<Payment />} />
-              <Route path="/module3/complaint/:orderId" element={<Complaint/>} />
-              <Route path="/module3/orderinfo/:orderId" element={<OrderInfo/>} />
-              <Route path="/module3/userinfo" element={<UserInfo />} />
-            <Route path="/module3/user" element={<UsersList />} />
-            <Route path="/module3/ic" element={<ICList />} />
-            <Route path="/module3/bankcard" element={<BankCardList />} />
-            <Route path="/module3/prepaid" element={<PrepaidList />} />
+          <Route path="/page404" element={<Page404 />} />
+          <Route path="/dashboard" element={<App />}>
+            <Route index element={<Index />} />
+            <Route path="/dashboard/device" element={<Device />} />
+            <Route path="/dashboard/admin" element={<Admin />} />
+              <Route path="/dashboard/audit" element={<Audit />} />
+              <Route path="/dashboard/audit/settings" element={<Auditsettings />}/>
+              <Route path="/dashboard/audit/manage" element={<Auditmanage />}/>
+              <Route path="/dashboard/orderlist" element={<OrderList />} />
+              <Route path="/dashboard/refund/:orderId" element={<Refund />} />
+              <Route path="/dashboard/payment/:orderId" element={<Payment />} />
+              <Route path="/dashboard/complaint/:orderId" element={<Complaint/>} />
+              <Route path="/dashboard/orderinfo/:orderId" element={<OrderInfo/>} />
+              <Route path="/dashboard/userinfo" element={<UserInfo />} />
+
+            <Route path="/dashboard/user/info" element={<UsersList />} />
+            <Route path="/dashboard/ic" element={<ICList />} />
+            <Route path="/dashboard/bankcard" element={<BankCardList />} />
+            <Route path="/dashboard/prepaid" element={<PrepaidList />} />
           </Route>
           
         </Routes>

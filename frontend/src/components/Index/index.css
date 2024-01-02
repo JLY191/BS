@@ -1,0 +1,42 @@
+/* index.css */
+
+.index-container {
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.welcome-message {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.user-guide {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.guide-heading {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.user-guide ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-guide li {
+    margin-bottom: 5px;
+}

@@ -6,12 +6,30 @@ import { Breadcrumb, Layout, Menu, theme, Dropdown, Space, message, Avatar } fro
 
 const { Header, Content, Footer, Sider } = Layout;
 
-/* 普通用户 */
-const items1 = [
+const item = [
   {
     key: '/module3/book',
     icon: <ScheduleOutlined />,
     label: <NavLink to='book'>商品预定</NavLink>,
+  },
+  {
+    key: '/module3/orderlist',
+    icon: <FileTextOutlined />,
+    label: <NavLink to='/orderlist'>历史订单</NavLink>,
+  },
+  {
+    key: '/module3/userinfo',
+    icon: <UserOutlined />,
+    label: <NavLink to='user/info'>个人信息</NavLink>,
+  },
+]
+
+/* 普通用户 */
+const items = [
+  {
+    key: '/dashboard/device',
+    icon: <SettingOutlined />,
+    label: <NavLink to='device'>设备管理</NavLink>,
   },
   {
     key: '/module3/orderlist',
@@ -77,7 +95,7 @@ const items3 = [
 const items4 = [
   {
     key: '/module3/user',
-    icon: <InfoCircleOutlined />,
+    icon: <IdcardOutlined />,
     label: <NavLink to='/module3/user'>用户信息管理</NavLink>,
   },
   {
@@ -102,33 +120,15 @@ const items4 = [
   },
 ];
 
-const obj1 = [
+const obj = [
   {
     label: '个人信息',
     key: '1',
     icon: <TeamOutlined />,
   },
   {
-    label: '历史订单',
+    label: '退出登录',
     key: '2',
-    icon: <FileTextOutlined />,
-  },
-  {
-    label: '退出登录',
-    key: '3',
-    icon: <LogoutOutlined />,
-  },
-];
-
-const obj2 = [
-  {
-    label: '个人信息',
-    key: '1',
-    icon: <TeamOutlined />,
-  },
-  {
-    label: '退出登录',
-    key: '3',
     icon: <LogoutOutlined />,
   },
 ];
@@ -136,9 +136,11 @@ const obj2 = [
 const App = () => {
   const [collapsed, setCollapsed] = useState(true);
   const {token: { colorBgContainer },} = theme.useToken();
-  const user = JSON.parse(sessionStorage.user);
-
   const navigate = useNavigate();
+  if (sessionStorage.user === undefined) {
+    message.error("请先登录！");
+  }
+  const user = sessionStorage.user === undefined ? "未登录" : JSON.parse(sessionStorage.user);
   const { pathname } = useLocation(); // 使用 useLocation() 获取当前访问界面的 url
   const [current, setCurrent] = useState(pathname); // 将侧边导航栏的选中选项与当前 url 同步
 
@@ -148,16 +150,12 @@ const App = () => {
 
   const handleDropDown = ({ key }) => { // 下拉菜单处理事件
     if(key === '1') { // 个人信息
-      setCurrent('/module3/userinfo');
-      navigate('/module3/userinfo');
+      setCurrent('/dashboard/user/info');
+      navigate('/dashboard/user/info');
     }
-    else { // 历史订单
-      if (key === '2') {
-        setCurrent('/module3/orderlist');
-        navigate('/module3/orderlist');
-      }
-      else { // 退出登录
-        axios.get('/m3/user/logout')
+    else {
+       // 退出登录
+        axios.get('/user/logout')
         .then(res => {
           message.success('退出成功！');
           sessionStorage.removeItem('user');
@@ -167,7 +165,7 @@ const App = () => {
           message.error(err.message);
         })
       }
-    }
+
   };
 
   return (
@@ -176,16 +174,16 @@ const App = () => {
       <Header>
         <div style={{ display: 'inline-block' }}>
           <Space>
-            <img src='../img/module3/web_icon.png' style={{marginTop:8}}/>
-            <span style={{color:'white', fontSize: 25, fontFamily: 'sans-serif'}}>在线支付系统</span>
+            <img src='../img/ez.jpg' style={{marginTop:8}} width={34} height={52} />
+            <span style={{color:'white', fontSize: 25, fontFamily: 'sans-serif'}}>物联网设备管理平台</span>
           </Space>
         </div>
         <div style={{ float: 'right', marginRight: 25 }}>
           <Space>
-            <Avatar size="large" src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${user.user_id}`} />
-            <Dropdown menu={{ items: user.is_administrator ? obj2 : obj1, onClick: handleDropDown, }}>
+            <Avatar size="large" src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${user.charCodeAt(0)%10+1}`} />
+            <Dropdown menu={{ items: obj, onClick: handleDropDown, }}>
                 <Space style={{color: 'white'}}>
-                  {`${user.user_name}`}
+                  欢迎您，尊敬的 {`${user}`} 用户
                   <CaretDownFilled />
                 </Space>
             </Dropdown>
@@ -197,10 +195,7 @@ const App = () => {
       <Sider theme='light' width={250} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <Menu selectedKeys={[current]} mode="inline" onClick={onClick} 
           items={
-            user.is_businessmen ? items2 :
-            user.is_inspector ? items3 :
-            user.is_administrator ? items4 :
-            items1
+            items
           } />
       </Sider>
         {/* Content 为内容展示区域 */}
@@ -211,17 +206,14 @@ const App = () => {
               style={{margin: '16px 0', display: 'inline-block'}}
               items={[
                 {
-                  href: 'localhost:3000/page1',
+                  href: 'http://localhost:3000/dashboard',
                   title: (
                     <>
                       <HomeOutlined />
                       <span>Home</span>
                     </>
                   ),
-                },
-                {
-                  title: 'Application',
-                },
+                }
               ]}
             />
           </>

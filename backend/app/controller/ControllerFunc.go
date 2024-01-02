@@ -194,3 +194,42 @@ func AddDeviceHandler(c *gin.Context) {
 	model.DB.Table("record").Create(&rec)
 	response.MyResponse(c, http.StatusOK, "Add device success.", nil)
 }
+
+func ModifyDeviceHandler(c *gin.Context) {
+	device := model.Device{}
+	err := c.BindJSON(&device)
+	if err != nil {
+		response.MyResponse(c, http.StatusInternalServerError, "Bind input fail, "+err.Error(), nil)
+		logrus.Info("Bind input fail, " + err.Error())
+		return
+	}
+	device.Timestamp = time.Now().UnixMilli()
+	model.DB.Table("device").Where("client_id = ?", device.ClientID).Updates(&device)
+	name, _ := c.Get("username")
+	rec := model.Record{
+		UserName: name.(string),
+		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Action:   "modify device",
+	}
+	model.DB.Table("record").Create(&rec)
+	response.MyResponse(c, http.StatusOK, "Modify device success.", nil)
+}
+
+func DeleteDeviceHandler(c *gin.Context) {
+	device := model.Device{}
+	err := c.BindJSON(&device)
+	if err != nil {
+		response.MyResponse(c, http.StatusInternalServerError, "Bind input fail, "+err.Error(), nil)
+		logrus.Info("Bind input fail, " + err.Error())
+		return
+	}
+	model.DB.Table("device").Where("client_id = ?", device.ClientID).Delete(&device)
+	name, _ := c.Get("username")
+	rec := model.Record{
+		UserName: name.(string),
+		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Action:   "delete device",
+	}
+	model.DB.Table("record").Create(&rec)
+	response.MyResponse(c, http.StatusOK, "Delete device success.", nil)
+}

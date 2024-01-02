@@ -31,7 +31,7 @@ const types = [{name: '升序', value: 'asc'}, {name: '降序', value: 'des'}];
 
 export default function Book() {
   let commentDivHeight;
-  const user = JSON.parse(sessionStorage.user);
+  const user = sessionStorage.user === undefined ? "未登录" : JSON.parse(sessionStorage.user);
   const [prePage, setPrePage] = useState(-1);
   const [page, setPage] = useState(-1);
   const [form] = useForm();

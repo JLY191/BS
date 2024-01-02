@@ -12,4 +12,15 @@ module.exports = function(app) {
             },
         })
     );
+    app.use(
+        '/device',
+        createProxyMiddleware({
+            target: 'http://localhost:8080',
+            changeOrigin: true,
+            cookieDomainRewrite: 'localhost',
+            pathRewrite: {
+                '^/device': '/device',
+            },
+        })
+    )
 };

@@ -22,7 +22,7 @@ function EmailLogin() {
       if(c == 200) {
         message.success("登录成功！");
         sessionStorage.setItem("user", JSON.stringify(res.data.Data[0]));
-        navigate('/module3');
+        navigate('/dashboard');
       }
       else {
         message.error("登录失败，请检查您输入的信息是否有误！");

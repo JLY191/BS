@@ -17,4 +17,6 @@ func addRoutes() {
 	deviceGroup := G.Group("/device", middleware.Cors(), middleware.Auth())
 	deviceGroup.GET("/all", controller.GetAllDeviceHandler)
 	deviceGroup.POST("/add", controller.AddDeviceHandler)
+	deviceGroup.POST("/modify", controller.ModifyDeviceHandler)
+	deviceGroup.POST("/delete", controller.DeleteDeviceHandler)
 }
