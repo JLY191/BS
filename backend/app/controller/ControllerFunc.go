@@ -57,7 +57,7 @@ func LoginHandler(c *gin.Context) {
 		logrus.Info("Bind input fail, " + err.Error())
 		return
 	}
-	if u.Name != "" && u.Email == "" {
+	if u.Name != "" {
 		model.DB.Table("user").Where("name = ?", u.Name).Find(&r)
 		if r.Password == utils.GetHashPwd(u.Password) {
 			token, err := utils.GenToken(r.Name, utils.MyKey)
@@ -77,7 +77,7 @@ func LoginHandler(c *gin.Context) {
 			response.MyResponse(c, http.StatusPreconditionFailed, "User input wrong.", nil)
 			return
 		}
-	} else if u.Name == "" && u.Email != "" {
+	} else {
 		model.DB.Table("user").Where("email = ?", u.Email).Find(&r)
 		if r.Password == utils.GetHashPwd(u.Password) {
 			token, err := utils.GenToken(r.Name, utils.MyKey)
@@ -98,7 +98,7 @@ func LoginHandler(c *gin.Context) {
 			return
 		}
 	}
-	response.MyResponse(c, http.StatusOK, "Login success.", nil)
+	response.MyResponse(c, http.StatusOK, "Login success.", r.Name)
 }
 
 func LogoutHandler(c *gin.Context) {

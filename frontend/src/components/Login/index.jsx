@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -12,21 +12,20 @@ function Login() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    const { code, user_name, pwd } = values;
-    axios.post('/m3/user/login', {
-      user_name,
-      pwd,
-      code,
+      const { name, password } = values;
+    axios.post('/user/login', {
+      name,
+      password,
     })
     .then(res => {
-      const {status, message: msg} = res.data;
-      if(!status) {
-        message.success(msg);
-        sessionStorage.setItem("user", JSON.stringify(res.data.user));
+      const c = res.data.Code;
+      if(c == 200) {
+        message.success("登录成功！");
+        sessionStorage.setItem("user", JSON.stringify(res.data.Data[0]));
         navigate('/module3');
       }
       else {
-        message.error(msg);
+        message.error("登录失败，请检查您输入的信息是否有误！");
       }
     })
     .catch(err => {
@@ -38,7 +37,6 @@ function Login() {
     console.log('Failed:', errorInfo);
     message.error('请完善登录信息！');
   };
-
   return (
     <div>
       <Topbar />
@@ -50,33 +48,19 @@ function Login() {
           <Form
             name="basic"
             className='login-form'
-            initialValues={{ remember: true, }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
-              name="code"
-              rules={[{ required: true, message: 'Please choose your Identity!' }]}
-            >
-              <Select size='large' placeholder='请选择身份' allowClear>
-                <Option key={1} value={1}>普通用户</Option>
-                <Option key={2} value={2}>商家</Option>
-                <Option key={3} value={3}>审计员</Option>
-                <Option key={4} value={4}>系统管理员</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name="user_name"
-              rules={[{ required: true, message: 'Please input your Username!' }]}
+                name="name"
+                rules={[{ required: true, message: '请输入用户名！' }]}
             >
               <Input size='large' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="请输入用户名" />
             </Form.Item>
-
             <Form.Item
-              name="pwd"
-              rules={[{ required: true, message: 'Please input your Password!' }]}
+              name="password"
+              rules={[{ required: true, message: '请输入密码！' }]}
             >
               <Input size='large'
                 prefix={<LockOutlined className="site-form-item-icon" />}
@@ -86,9 +70,9 @@ function Login() {
             </Form.Item>
 
             <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>记住密码</Checkbox>
-              </Form.Item>
+              <Link to="/email_login" className="login-form-email">
+                邮箱登录
+              </Link>
               <Link to="/register" className="login-form-forgot">
                 还没有账号？点击注册
               </Link>

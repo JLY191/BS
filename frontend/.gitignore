@@ -9,6 +9,9 @@ build/
 *.dll
 *.exec
 
+# module
+node_modules/
+
 # DOCS & CONFIG
 config.yaml
 

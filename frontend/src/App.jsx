@@ -240,7 +240,7 @@ const App = () => {
         </Content>
 
         <Footer style={{ textAlign: 'center',}}>
-          在线支付系统 ©2023 Created by HSX
+          物联网设备管理平台 ©2023-2024 Created by JLY
         </Footer>
         </Layout>
 

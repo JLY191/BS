@@ -7,6 +7,7 @@ import App from './App';
 import Book from './pages/module3/Book';
 import Admin from './pages/module3/Admin';
 import Login from './components/Login';
+import EmailLogin from "./components/EmailLogin";
 import Register from './components/Register';
 import Audit from './pages/Audit';
 import Auditsettings from './components/Auditsettings.jsx';
@@ -29,6 +30,7 @@ root.render(
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/email_login" element={<EmailLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/module3/page404" element={<Page404 />} />
           <Route path="/module3" element={<App />}>

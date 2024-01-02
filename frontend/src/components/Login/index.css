@@ -43,6 +43,10 @@
   float: right;
 }
 
+.login-form-email {
+  float: left;
+}
+
 .ant-col-rtl .login-form-forgot {
   float: left;
 }

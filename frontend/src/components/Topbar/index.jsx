@@ -7,8 +7,8 @@ export default function Topbar() {
     <div className="top-bar">
       <div className="item1">
         <Space>
-          <img src='../img/module3/web_icon.png'/>
-          <label className="bar-tag"><a href="http://localhost:3000/login">在线支付系统</a></label>
+          <img src='../img/ez.jpg' width={34} height={52}   />
+          <label className="bar-tag"><a href="http://localhost:3000/login">物联网设备管理平台</a></label>
         </Space>
       </div>
     </div>
