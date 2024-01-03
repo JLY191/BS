@@ -22,5 +22,16 @@ module.exports = function(app) {
                 '^/device': '/device',
             },
         })
+    );
+    app.use(
+        '/message',
+        createProxyMiddleware({
+            target: 'http://localhost:8080',
+            changeOrigin: true,
+            cookieDomainRewrite: 'localhost',
+            pathRewrite: {
+                '^/message': '/message',
+            },
+        })
     )
 };

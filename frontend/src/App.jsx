@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { HomeOutlined, TeamOutlined, SettingOutlined, UserOutlined, IdcardOutlined , CreditCardOutlined, CreditCardFilled, InfoCircleOutlined, ScheduleOutlined, PieChartOutlined, CaretDownFilled, LogoutOutlined, FileTextOutlined } from '@ant-design/icons';
+import { HomeOutlined, TeamOutlined, SettingOutlined, UserOutlined, IdcardOutlined , CreditCardOutlined, CreditCardFilled, InfoCircleOutlined, ScheduleOutlined, PieChartOutlined, CaretDownFilled, LogoutOutlined, FileTextOutlined, ContainerOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Dropdown, Space, message, Avatar } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -32,9 +32,9 @@ const items = [
     label: <NavLink to='device'>设备管理</NavLink>,
   },
   {
-    key: '/module3/orderlist',
-    icon: <FileTextOutlined />,
-    label: <NavLink to='/module3/orderlist'>历史订单</NavLink>,
+    key: '/dashboard/message',
+    icon: <InfoCircleOutlined />,
+    label: <NavLink to='/dashboard/message'>设备信息</NavLink>,
   },
   {
     key: '/module3/userinfo',

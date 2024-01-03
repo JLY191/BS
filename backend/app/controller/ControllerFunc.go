@@ -257,3 +257,16 @@ func DeleteDeviceHandler(c *gin.Context) {
 	model.DB.Table("record").Create(&rec)
 	response.MyResponse(c, http.StatusOK, "Delete device success.", nil)
 }
+
+func GetAllMessageHandler(c *gin.Context) {
+	var messages []model.Message
+	model.DB.Table("message").Where("id > 0").Find(&messages)
+	name, _ := c.Get("username")
+	rec := model.Record{
+		UserName: name.(string),
+		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Action:   "get message",
+	}
+	model.DB.Table("record").Create(&rec)
+	response.MyResponse(c, http.StatusOK, "Get message success.", messages)
+}
