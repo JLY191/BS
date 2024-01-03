@@ -185,6 +185,16 @@ func AddDeviceHandler(c *gin.Context) {
 	device.Alert = 0
 	device.Timestamp = time.Now().UnixMilli()
 	model.DB.Table("device").Create(&device)
+	message := model.Message{
+		Alert:     device.Alert,
+		ClientID:  device.ClientID,
+		Info:      device.Info,
+		Lat:       device.Lat,
+		Lng:       device.Lng,
+		Timestamp: device.Timestamp,
+		Value:     device.Value,
+	}
+	model.DB.Table("message").Create(&message)
 	name, _ := c.Get("username")
 	rec := model.Record{
 		UserName: name.(string),
@@ -212,6 +222,16 @@ func ModifyDeviceHandler(c *gin.Context) {
 		Action:   "modify device",
 	}
 	model.DB.Table("record").Create(&rec)
+	message := model.Message{
+		Alert:     device.Alert,
+		ClientID:  device.ClientID,
+		Info:      device.Info,
+		Lat:       device.Lat,
+		Lng:       device.Lng,
+		Timestamp: device.Timestamp,
+		Value:     device.Value,
+	}
+	model.DB.Table("message").Create(&message)
 	response.MyResponse(c, http.StatusOK, "Modify device success.", nil)
 }
 
@@ -224,6 +244,10 @@ func DeleteDeviceHandler(c *gin.Context) {
 		return
 	}
 	model.DB.Table("device").Where("client_id = ?", device.ClientID).Delete(&device)
+	message := model.Message{
+		ClientID: device.ClientID,
+	}
+	model.DB.Table("message").Where("client_id = ?", message.ClientID).Delete(&message)
 	name, _ := c.Get("username")
 	rec := model.Record{
 		UserName: name.(string),

@@ -33,7 +33,7 @@ func connectDatabase() {
 }
 
 func createTables() {
-	err := DB.AutoMigrate(&User{}, &Device{}, &Record{})
+	err := DB.AutoMigrate(&User{}, &Device{}, &Record{}, &Message{})
 	if err != nil {
 		logrus.Info("Can't create tables automatically, " + err.Error())
 	} else {

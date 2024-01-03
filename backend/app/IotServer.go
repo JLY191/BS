@@ -79,6 +79,16 @@ func InitIotServer() {
 			device.ID = query.ID
 			model.DB.Table("device").Where("id = ?", device.ID).Updates(&device)
 		}
+		message := model.Message{
+			Alert:     tmp.Alert,
+			ClientID:  tmp.ClientID,
+			Info:      tmp.Info,
+			Lat:       tmp.Lat,
+			Lng:       tmp.Lng,
+			Timestamp: tmp.Timestamp,
+			Value:     tmp.Value,
+		}
+		model.DB.Table("message").Create(&message)
 	}
 	server.Subscribe("testapp", 1, callbackFn)
 
