@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Col, Row } from "antd";
+import {Button, Card, Col, Row} from "antd";
 import { Bar, Pie, Column } from "@ant-design/charts";
 import {de} from "date-fns/locale";
 
@@ -97,14 +97,28 @@ const Statistics = () => {
         legend: { position: 'top-left' },
     };
 
+    const flush = () => {
+        window.location.reload()
+    }
+
     return (
         <div>
+            <Button
+                type="primary"
+                className="flush-button"
+                onClick={flush}
+                style={{marginRight:16, float:"right", marginTop:16}}
+            >
+                刷新页面
+            </Button>
+            <br></br>
             <div>
-                <h2>设备总量</h2>
+                <br></br>
+                <h1 align='middle'>设备总量</h1>
                 <Pie {...pieConfig} />
-                <h2>消息总量</h2>
+                <h1 align='middle'>消息总量</h1>
                 <Bar {...barConfig} />
-                <h2>分经度信息总量</h2>
+                <h1 align='middle'>分经度信息总量</h1>
                 <Column {...colConfig} />
             </div>
         </div>
