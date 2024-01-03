@@ -149,6 +149,10 @@ const Device = () => {
         setModalVisible(false);
     };
 
+    const flush = () => {
+        window.location.reload()
+    }
+
 
 
     useEffect(() => {
@@ -199,6 +203,10 @@ const Device = () => {
             dataIndex: 'Alert',
             key: 'Alert',
             editable: true,
+            render: (text, record) => {
+                const alertText = record.Alert === 1 ? <span style={{ color: 'red' }}>1</span> : '0';
+                return alertText;
+            },
         },
         {
             title: '设备ID',
@@ -293,8 +301,21 @@ const Device = () => {
 
     return (
         <div>
-            <Button type="primary" className="add-button" onClick={showModal} >
+            <Button
+                type="primary"
+                className="add-button"
+                onClick={showModal}
+                style={{marginTop: 16, marginBottom:16}}
+            >
                 新增设备
+            </Button>
+            <Button
+                type="primary"
+                className="flush-button"
+                onClick={flush}
+                style={{marginBottom:16, float:"right", marginTop:16}}
+            >
+                刷新页面
             </Button>
             <Modal
                 title="新增设备"
