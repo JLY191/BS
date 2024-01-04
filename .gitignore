@@ -3,4 +3,5 @@
 .vscode/
 
 # OS CACHE
+**/.DS_Store
 .DS_Store

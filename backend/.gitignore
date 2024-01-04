@@ -1,7 +1,3 @@
-# IDE
-.idea/
-.vscode/
-
 # BUILD
 build/
 *.exe
@@ -15,5 +11,3 @@ build/
 # LOGS
 *.log
 
-# OS CACHE
-.DS_Store
