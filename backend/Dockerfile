@@ -29,4 +29,4 @@ EXPOSE 8080
 # 定义容器启动时执行的命令
 
 # 等待数据库服务准备好
-CMD ["sh", "-c", "sleep 10 && ./main"]
+CMD ["sh", "-c", "sleep 30 && ./main"]
