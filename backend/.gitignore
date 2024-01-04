@@ -9,9 +9,6 @@ build/
 *.dll
 *.exec
 
-# DOCS & CONFIG
-config.yaml
-
 # SECRET
 *.pem
 

@@ -1,0 +1,6 @@
+username: jly           # MySQL用户名
+password: jly           # MySQL用户密码
+db_name: bs             # 数据库名字
+host: database          # 服务端ip
+host_port: 3306         # MySQL端口
+sign: jly               # jwt要用到的签名
