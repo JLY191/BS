@@ -1,6 +1,10 @@
 # 使用指定的 Golang 镜像版本
 FROM golang:latest
 
+# 设置国内源
+RUN go env -w GO111MODULE=on
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
 # 设置工作目录
 WORKDIR /app
 

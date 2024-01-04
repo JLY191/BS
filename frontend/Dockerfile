@@ -1,6 +1,9 @@
 # 使用指定的 Node 镜像版本
 FROM node:latest
 
+# 设置国内源
+RUN npm config set registry https://registry.npm.taobao.org/
+
 # 设置工作目录
 WORKDIR /app
 

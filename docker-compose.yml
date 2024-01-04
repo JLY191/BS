@@ -3,6 +3,8 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        - NPM_REGISTRY=https://registry.npm.taobao.org/
     ports:
       - "3000:3000"
     networks:
@@ -13,6 +15,8 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        - GOPROXY=https://goproxy.cn
     ports:
       - "8080:8080"
       - "1883:1883"
