@@ -25,9 +25,11 @@ const Statistics = () => {
             const messageResponse = await axios.get('/message/all');
 
             const totalDeviceCount = deviceResponse.data.Data.flat().length;
-            const totalAlertCount = deviceResponse.data.Data.flat().filter(device => device.alert).length;
+            const totalAlertCount = deviceResponse.data.Data.flat().filter(device => device.alert === 1).length;
             const totalMessageCount = messageResponse.data.Data.flat().length;
 
+            console.log(totalDeviceCount);
+            console.log(totalAlertCount);
             setAlertMessageCount(messageResponse.data.Data.flat().filter(message => message.alert === 1).length);
 
             // 计算非告警信息量
@@ -52,8 +54,8 @@ const Statistics = () => {
     };
 
     const data = [
-        { type: 'Alert', value: deviceCount },
-        { type: 'Normal', value: deviceCount - alertCount },
+        { type: 'Alert', value: alertCount },
+        { type: 'Normal', value: (deviceCount - alertCount) },
     ];
 
     const pieConfig = {
@@ -62,11 +64,6 @@ const Statistics = () => {
         angleField: 'value',
         colorField: 'type',
         radius: 0.8,
-        label: {
-            type: 'spider',
-            labelHeight: 28,
-            content: '{percentage}',
-        },
         interactions: [{ type: 'element-selected' }, { type: 'element-active' }],
     };
 

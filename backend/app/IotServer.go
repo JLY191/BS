@@ -77,7 +77,8 @@ func InitIotServer() {
 			model.DB.Table("device").Create(&device)
 		} else {
 			device.ID = query.ID
-			model.DB.Table("device").Where("id = ?", device.ID).Updates(&device)
+			device.Name = device.ClientID
+			model.DB.Table("device").Select("alert", "info", "lat", "lng", "timestamp", "value", "name", "client_id", "type").Where("id = ?", device.ID).Updates(&device)
 		}
 		message := model.Message{
 			Alert:     tmp.Alert,

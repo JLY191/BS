@@ -214,7 +214,7 @@ func ModifyDeviceHandler(c *gin.Context) {
 		return
 	}
 	device.Timestamp = time.Now().UnixMilli()
-	model.DB.Table("device").Where("client_id = ?", device.ClientID).Updates(&device)
+	model.DB.Table("device").Select("alert", "info", "lat", "lng", "timestamp", "value", "name").Where("client_id = ?", device.ClientID).Updates(&device)
 	name, _ := c.Get("username")
 	rec := model.Record{
 		UserName: name.(string),
