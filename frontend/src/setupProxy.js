@@ -4,7 +4,7 @@ module.exports = function(app) {
     app.use(
         '/user',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: 'http://backend:8080',
             changeOrigin: true,
             cookieDomainRewrite: 'localhost',
             pathRewrite: {
@@ -15,7 +15,7 @@ module.exports = function(app) {
     app.use(
         '/device',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: 'http://backend:8080',
             changeOrigin: true,
             cookieDomainRewrite: 'localhost',
             pathRewrite: {
@@ -26,7 +26,7 @@ module.exports = function(app) {
     app.use(
         '/message',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: 'http://backend:8080',
             changeOrigin: true,
             cookieDomainRewrite: 'localhost',
             pathRewrite: {

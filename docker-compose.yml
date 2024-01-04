@@ -1,0 +1,44 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+      - "1883:1883"
+    networks:
+      - mynetwork
+    depends_on:
+      - database
+    environment:
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_USER: jly
+      DB_PASSWORD: jly
+      DB_NAME: bs
+      JWT_SIGN: jly
+
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: bsroot
+      MYSQL_DATABASE: bs
+      MYSQL_USER: jly
+      MYSQL_PASSWORD: jly
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
