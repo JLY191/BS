@@ -115,7 +115,7 @@ const MapPage = () => {
                     dataSource={currentDeviceData}
                     renderItem={(message, index) => (
                         <List.Item
-                            key={index}>{`轨迹点: ${index + 1}, Device ID: ${message.clientId}, Time: ${new Date(message.timestamp).toLocaleString()}, Value: ${message.value}`}</List.Item>
+                            key={index}>{`轨迹点: ${index + 1 + (currentPage-1)*10}, Device ID: ${message.clientId}, Time: ${new Date(message.timestamp).toLocaleString()}, Value: ${message.value}`}</List.Item>
                     )}
                 />
                 <Pagination

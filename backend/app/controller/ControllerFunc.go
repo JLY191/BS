@@ -39,9 +39,10 @@ func RegisterHandler(c *gin.Context) {
 		return
 	}
 	model.DB.Table("user").Create(&mu)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	r := model.Record{
 		UserName: mu.Name,
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "register",
 	}
 	model.DB.Table("record").Create(&r)
@@ -67,9 +68,10 @@ func LoginHandler(c *gin.Context) {
 				return
 			}
 			c.SetCookie("bs_jly", token, 36000, "/", "127.0.0.1", false, true)
+			loc, _ := time.LoadLocation("Asia/Shanghai")
 			rec := model.Record{
 				UserName: r.Name,
-				Time:     time.Now().Format("2006-01-02 15:04:05"),
+				Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 				Action:   "login",
 			}
 			model.DB.Table("record").Create(&rec)
@@ -87,9 +89,10 @@ func LoginHandler(c *gin.Context) {
 				return
 			}
 			c.SetCookie("bs_jly", token, 36000, "/", "127.0.0.1", false, true)
+			loc, _ := time.LoadLocation("Asia/Shanghai")
 			rec := model.Record{
 				UserName: r.Name,
-				Time:     time.Now().Format("2006-01-02 15:04:05"),
+				Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 				Action:   "login",
 			}
 			model.DB.Table("record").Create(&rec)
@@ -109,9 +112,10 @@ func LogoutHandler(c *gin.Context) {
 	}
 	name := utils.ParseToken(cookie)
 	c.SetCookie("bs_jly", cookie, -1, "/", "127.0.0.1", false, true)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name,
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "logout",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -120,9 +124,10 @@ func LogoutHandler(c *gin.Context) {
 
 func UserInfoHandler(c *gin.Context) {
 	userName, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: userName.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "get info",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -158,9 +163,10 @@ func GetAllDeviceHandler(c *gin.Context) {
 		ret = append(ret, tmp)
 	}
 	name, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "get all device",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -196,9 +202,10 @@ func AddDeviceHandler(c *gin.Context) {
 	}
 	model.DB.Table("message").Create(&message)
 	name, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "add device",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -216,9 +223,10 @@ func ModifyDeviceHandler(c *gin.Context) {
 	device.Timestamp = time.Now().UnixMilli()
 	model.DB.Table("device").Select("alert", "info", "lat", "lng", "timestamp", "value", "name").Where("client_id = ?", device.ClientID).Updates(&device)
 	name, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "modify device",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -249,9 +257,10 @@ func DeleteDeviceHandler(c *gin.Context) {
 	}
 	model.DB.Table("message").Where("client_id = ?", message.ClientID).Delete(&message)
 	name, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "delete device",
 	}
 	model.DB.Table("record").Create(&rec)
@@ -262,9 +271,10 @@ func GetAllMessageHandler(c *gin.Context) {
 	var messages []model.Message
 	model.DB.Table("message").Where("id > 0").Find(&messages)
 	name, _ := c.Get("username")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	rec := model.Record{
 		UserName: name.(string),
-		Time:     time.Now().Format("2006-01-02 15:04:05"),
+		Time:     time.Now().In(loc).Format("2006-01-02 15:04:05"),
 		Action:   "get message",
 	}
 	model.DB.Table("record").Create(&rec)
