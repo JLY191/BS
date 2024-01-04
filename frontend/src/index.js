@@ -7,6 +7,7 @@ import App from './App';
 import Device from './pages/Device';
 import Message from "./pages/Message";
 import Statistics from "./pages/Statistics";
+import MapPage from "./pages/Map";
 import Admin from './pages/module3/Admin';
 import Login from './components/Login';
 import EmailLogin from "./components/EmailLogin";
@@ -41,6 +42,7 @@ root.render(
             <Route path="/dashboard/device" element={<Device />} />
             <Route path="/dashboard/message" element={<Message />} />
             <Route path="/dashboard/statistics" element={<Statistics />} />
+            <Route path="/dashboard/map" element={<MapPage />} />
               <Route path="/dashboard/audit" element={<Audit />} />
               <Route path="/dashboard/audit/settings" element={<Auditsettings />}/>
               <Route path="/dashboard/audit/manage" element={<Auditmanage />}/>

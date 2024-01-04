@@ -1,44 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   HomeOutlined,
   TeamOutlined,
   SettingOutlined,
-  UserOutlined,
-  IdcardOutlined,
-  CreditCardOutlined,
-  CreditCardFilled,
   InfoCircleOutlined,
-  ScheduleOutlined,
-  PieChartOutlined,
   CaretDownFilled,
   LogoutOutlined,
-  FileTextOutlined,
-  ContainerOutlined,
-  BarChartOutlined
+  BarChartOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Dropdown, Space, message, Avatar } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
-
-const item = [
-  {
-    key: '/module3/book',
-    icon: <ScheduleOutlined />,
-    label: <NavLink to='book'>商品预定</NavLink>,
-  },
-  {
-    key: '/module3/orderlist',
-    icon: <FileTextOutlined />,
-    label: <NavLink to='/orderlist'>历史订单</NavLink>,
-  },
-  {
-    key: '/module3/userinfo',
-    icon: <UserOutlined />,
-    label: <NavLink to='user/info'>个人信息</NavLink>,
-  },
-]
 
 const items = [
   {
@@ -57,88 +32,11 @@ const items = [
     label: <NavLink to='/dashboard/statistics'>统计信息</NavLink>,
   },
   {
-    key: '/module3/userinfo',
-    icon: <UserOutlined />,
-    label: <NavLink to='/module3/userinfo'>个人信息</NavLink>,
+    key: '/dashboard/map',
+    icon: <EnvironmentOutlined />,
+    label: <NavLink to='/dashboard/map'>查看地图</NavLink>,
   },
 ]
-
-/* 商家 */
-const items2 = [
-  {
-    key: '/module3/book',
-    icon: <ScheduleOutlined />,
-    label: <NavLink to='book'>商品预定</NavLink>,
-  },
-  {
-    key: '/module3/admin',
-    icon: <SettingOutlined />,
-    label: <NavLink to='admin '>后台管理</NavLink>,
-  },
-  {
-    key: '/module3/userinfo',
-    icon: <UserOutlined />,
-    label: <NavLink to='/module3/userinfo'>个人信息</NavLink>,
-  },
-  {
-    key: '/module3/orderlist',
-    icon: <FileTextOutlined />,
-    label: <NavLink to='/module3/orderlist'>历史订单</NavLink>,
-  },
-];
-
-/* 审计员 */
-const items3 = [
-  {
-    key: '/module3/audit',
-    icon: <PieChartOutlined />,
-    label: <NavLink to='/module3/audit'>对账审核</NavLink>,
-    children: [
-      // {label:<NavLink to='/audit'>登录验证</NavLink>, key:"/audit/"},
-      {label:<NavLink to='/module3/audit/settings'>对账处理</NavLink>, key:"/module3/audit/settings"},
-      {label:<NavLink to='/module3/audit/manage'>审核管理</NavLink>, key:"/module3/audit/manage"},
-    ],
-  },
-  {
-    key: '/module3/userinfo',
-    icon: <UserOutlined />,
-    label: <NavLink to='/module3/userinfo'>个人信息</NavLink>,
-  },
-  {
-    key: '/module3/orderlist',
-    icon: <FileTextOutlined />,
-    label: <NavLink to='/module3/orderlist'>历史订单</NavLink>,
-  },
-];
-
-/* 系统管理员 */
-const items4 = [
-  {
-    key: '/module3/user',
-    icon: <IdcardOutlined />,
-    label: <NavLink to='/module3/user'>用户信息管理</NavLink>,
-  },
-  {
-    key: '/module3/ic',
-    icon: <IdcardOutlined />,
-    label: <NavLink to='/module3/ic'>IC卡信息管理</NavLink>,
-  },
-  {
-    key: '/module3/bankcard',
-    icon: <CreditCardOutlined />,
-    label: <NavLink to='/module3/bankcard'>银行卡信息管理</NavLink>,
-  },
-  {
-    key: '/module3/prepaid',
-    icon: <CreditCardFilled />,
-    label: <NavLink to='/module3/prepaid'>预付卡信息管理</NavLink>,
-  },
-  {
-    key: '/module3/userinfo',
-    icon: <UserOutlined />,
-    label: <NavLink to='/module3/userinfo'>个人信息</NavLink>,
-  },
-];
 
 const obj = [
   {
@@ -188,24 +86,43 @@ const App = () => {
 
   };
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 649);
+    };
+
+    // 组件挂载时和窗口大小变化时都会触发
+    window.addEventListener('resize', handleResize);
+    handleResize(); // 初始化
+
+    // 组件卸载时移除事件监听
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Layout>
       {/* 头部信息 */}
-      <Header>
-        <div style={{ display: 'inline-block' }}>
-          <Space>
-            <img src='../img/ez.jpg' style={{marginTop:8}} width={34} height={52} />
-            <span style={{color:'white', fontSize: 25, fontFamily: 'sans-serif'}}>物联网设备管理平台</span>
-          </Space>
-        </div>
-        <div style={{ float: 'right', marginRight: 25 }}>
-          <Space>
-            <Avatar size="large" src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${user.charCodeAt(0)%10+1}`} />
-            <Dropdown menu={{ items: obj, onClick: handleDropDown, }}>
-                <Space style={{color: 'white'}}>
-                  欢迎您，尊敬的 {`${user}`} 用户
-                  <CaretDownFilled />
-                </Space>
+      <Header style={{ overflowX: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 16px' }}>
+          {!isSmallScreen && (
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: 'auto' }}>
+                {/* 左侧部分 */}
+                <img src='../img/ez.jpg' style={{ marginTop: 8 }} width={34} height={52} />
+                <span style={{ color: 'white', fontSize: 25, fontFamily: 'sans-serif', marginLeft: '10px', display: 'block' }}>物联网设备管理平台</span>
+              </div>
+          )}
+          {/* 右侧部分 */}
+          <Space style={{ marginRight: 25, marginLeft: isSmallScreen ? 'auto' : '0' }}>
+            <Avatar size="large" src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${user.charCodeAt(0) % 10 + 1}`} />
+            <Dropdown menu={{ items: obj, onClick: handleDropDown }}>
+              <Space style={{ color: 'white' }}>
+                欢迎您，尊敬的 {`${user}`} 用户
+                <CaretDownFilled />
+              </Space>
             </Dropdown>
           </Space>
         </div>

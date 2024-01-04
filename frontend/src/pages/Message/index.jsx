@@ -141,6 +141,7 @@ const Message = () => {
                 <Table
                     dataSource={dataSource}
                     columns={mergedColumns}
+                    scroll={{ x: 1500, scrollToFirstRowOnChange: true }}
                 />
             </Form>
         </div>

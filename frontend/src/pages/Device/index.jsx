@@ -325,7 +325,7 @@ const Device = () => {
             >
                 <AddDeviceForm formRef={formRef} onFinish={onFinish} />
             </Modal>
-            <Form form={form} component={false}>
+            <Form form={form} component={false} >
                 <Table
                     components={{
                         body: {
@@ -339,6 +339,7 @@ const Device = () => {
                     pagination={{
                         onChange: cancel,
                     }}
+                    scroll={{ x: 1500, scrollToFirstRowOnChange: true }}
                 />
             </Form>
         </div>

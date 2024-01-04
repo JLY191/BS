@@ -49,6 +49,7 @@ const UsersList = () => {
         <Table
           dataSource={dataSource}
           columns={columns}
+          scroll={{ x: 1000, scrollToFirstRowOnChange: true }}
         />
       </Form>
     </div>
