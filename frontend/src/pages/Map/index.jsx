@@ -37,6 +37,8 @@ const MapPage = () => {
 
                     // 在每个轨迹点添加标签
                     trackPoints.forEach((point, index) => {
+                        const message = deviceInfo[index];
+                        const alertColor = message.alert === 1 ? 'red' : 'blue';
                         const marker = new AMap.Marker({
                             position: point,
                             map: map,
@@ -48,7 +50,8 @@ const MapPage = () => {
                             text: `轨迹点 ${index + 1}`, // 标签文本
                             offset: new AMap.Pixel(0, -20), // 偏移位置
                             style: {
-                                backgroundColor: '#fff',
+                                backgroundColor: alertColor,
+                                color: 'white',
                                 border: '1px solid #ccc',
                                 padding: '5px',
                                 borderRadius: '5px',
@@ -115,7 +118,7 @@ const MapPage = () => {
                     dataSource={currentDeviceData}
                     renderItem={(message, index) => (
                         <List.Item
-                            key={index}>{`轨迹点: ${index + 1 + (currentPage-1)*10}, Device ID: ${message.clientId}, Time: ${new Date(message.timestamp).toLocaleString()}, Value: ${message.value}`}</List.Item>
+                            key={index}>{`轨迹点: ${index + 1 + (currentPage-1)*10}, 时间: ${new Date(message.timestamp).toLocaleString()}, 纬度: ${message.lat}, 经度: ${message.lng}, 值: ${message.value} `}</List.Item>
                     )}
                 />
                 <Pagination

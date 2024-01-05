@@ -32,6 +32,14 @@ services:
       DB_NAME: bs
       JWT_SIGN: jly
 
+  iotclient:
+    build:
+      context: ./target
+    networks:
+      - mynetwork
+    depends_on:
+      - backend
+
   database:
     image: mysql:latest
     environment:
